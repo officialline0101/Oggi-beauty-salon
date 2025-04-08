@@ -1192,13 +1192,9 @@
             const formData = {
                 name: document.getElementById('name').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
-                visitCount: visitCount,
-                highschoolCount: highschoolCount,
-                selectedSymptom: selectedSymptom && selectedSymptom.length > 0 ? selectedSymptom : null, // 空の選択肢をチェック
                 dates: [
                     document.getElementById('date1').value,
-                    document.getElementById('date2').value,
-                    document.getElementById('date3').value
+                    document.getElementById('date2').value
                 ],
                 message: document.getElementById('message').value.trim()
             };
@@ -1214,16 +1210,6 @@
                 return;
             }
 
-            if (!formData.highschoolCount) {
-                alert('高校生以下ですか？を選択してください。');
-                return;
-            }
-
-            if (!formData.selectedSymptom) {
-                alert('メニューを選択してください。');
-                return;
-            }
-
             if (!formData.dates[0]) {
                 alert('第1希望日※必須を選択してください。');
                 return;
@@ -1232,7 +1218,7 @@
             // LINEトークにメッセージを送信
             liff.sendMessages([{
                 type: 'text',
-                text: `【予約フォーム】\nお名前：${formData.name}\n\n電話番号：${formData.phone}\n\nご来店回数：${formData.visitCount}\n\n高校生以下ですか？：${formData.highschoolCount}\n\nメニュー：${formData.selectedSymptom}\n\n【希望日時】：\n・第一希望日\n${formatDate(formData.dates[0])}\n\n・第二希望日\n${formatDate(formData.dates[1])}\n\n・第三希望日\n${formatDate(formData.dates[2])}\n\nメッセージ：${formData.message}`
+                text: `【予約フォーム】\nお名前：${formData.name}\n\n電話番号：${formData.phone}\n\nご来店回数：${formData.visitCount}\n\n【希望日時】：\n・第一希望日\n${formatDate(formData.dates[0])}\n\n・第二希望日\n${formatDate(formData.dates[1])}\n\nメッセージ：${formData.message}`
             }]).then(() => {
                 alert('当日キャンセルは無いようにお願いいたします。');
                 liff.closeWindow();
